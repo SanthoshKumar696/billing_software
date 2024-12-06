@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
+# Function to handle exit menu action
+def exit_program():
+    root.quit()
+
 # Functionality for buttons
 def add_item():
     sl_no = len(tree.get_children()) + 1
@@ -12,7 +16,7 @@ def add_item():
     mc = "-"
 
     if name and transaction and gross:
-        tree.insert("", "end", values=(sl_no, name, transaction, gross, melting, net_weight, mc))
+        tree.insert("", "end", values=(sl_no, name, transaction, int(gross)*2, melting, net_weight, mc))
         party_entry.delete(0, tk.END)
         gross_entry.delete(0, tk.END)
     else:
@@ -44,9 +48,46 @@ root.title("Jewelry Shop Management")
 root.geometry("900x600")
 root.configure(bg="lightpink")
 
+
+# Create menu bar
+menu_bar = tk.Menu(root)
+root.config(menu=menu_bar)
+
+# Add menu items
+master_menu = tk.Menu(menu_bar, tearoff=0)
+transaction_menu = tk.Menu(menu_bar, tearoff=0)
+report_menu = tk.Menu(menu_bar, tearoff=0)
+utility_menu = tk.Menu(menu_bar, tearoff=0)
+exit_menu = tk.Menu(menu_bar, tearoff=0)
+
+menu_bar.add_cascade(label="Master", menu=master_menu)
+menu_bar.add_cascade(label="Transaction", menu=transaction_menu)
+menu_bar.add_cascade(label="Report", menu=report_menu)
+menu_bar.add_cascade(label="Utility", menu=utility_menu)
+menu_bar.add_cascade(label="Exit", menu=exit_menu)
+
+exit_menu.add_command(label="Exit", command=exit_program)
+
+
+#Master
+# Adding submenu items to the Master menu
+master_menu.add_command(label="Main Ledger", command=lambda: messagebox.showinfo("Action", "Main Ledger clicked"))
+master_menu.add_command(label="Sub Ledger", command=lambda: messagebox.showinfo("Action", "Sub Ledger clicked"))
+master_menu.add_command(label="Main Product", command=lambda: messagebox.showinfo("Action", "Main Product clicked"))
+master_menu.add_command(label="Sub Product", command=lambda: messagebox.showinfo("Action", "Sub Product clicked"))
+master_menu.add_command(label="Opening Stock", command=lambda: messagebox.showinfo("Action", "Opening Stock clicked"))
+master_menu.add_command(label="Party Opening Balance", command=lambda: messagebox.showinfo("Action", "Party Opening Balance clicked"))
+master_menu.add_command(label="Delete Opening Balance by Group", command=lambda: messagebox.showinfo("Action", "Delete Opening Balance by Group clicked"))
+master_menu.add_command(label="Zero Balance", command=lambda: messagebox.showinfo("Action", "Zero Balance clicked"))
+master_menu.add_command(label="Price List", command=lambda: messagebox.showinfo("Action", "Price List clicked"))
+master_menu.add_command(label="Party PriceList By Sub Product", command=lambda: messagebox.showinfo("Action", "Party PriceList By Sub Product clicked"))
+master_menu.add_command(label="Party PriceList By Design", command=lambda: messagebox.showinfo("Action", "Party PriceList By Design clicked"))
+master_menu.add_command(label="Product Merge", command=lambda: messagebox.showinfo("Action", "Product Merge clicked"))
+master_menu.add_command(label="Account Merge", command=lambda: messagebox.showinfo("Action", "Account Merge clicked"))
+master_menu.add_command(label="Design Merge", command=lambda: messagebox.showinfo("Action", "Design Merge clicked"))
+master_menu.add_command(label="Rate Cut OB", command=lambda: messagebox.showinfo("Action", "Rate Cut OB clicked"))
+
 # Header
-
-
 cash_receipt_label = tk.Label(root, text="Cash Receipt", font=("Arial", 14, "bold"), bg="lightpink", fg="red")
 cash_receipt_label.pack()
 
@@ -89,6 +130,7 @@ tk.Label(item_frame, text="Touch:", bg="lightpink", font=("Arial", 10)).grid(row
 touch_entry = tk.Entry(item_frame, width=10)
 touch_entry.grid(row=0, column=7, padx=5)
 
+
 # Table to display items
 tree_frame = tk.Frame(root, bg="lightpink")
 tree_frame.pack(pady=10)
@@ -107,10 +149,10 @@ tree.heading("#7", text="MC")
 tree.column("#1", width=50, anchor=tk.CENTER)
 tree.column("#2", width=100, anchor=tk.W)
 tree.column("#3", width=100, anchor=tk.W)
-tree.column("#4", width=80, anchor=tk.E)
-tree.column("#5", width=80, anchor=tk.E)
-tree.column("#6", width=100, anchor=tk.E)
-tree.column("#7", width=80, anchor=tk.E)
+tree.column("#4", width=80, anchor=tk.W)
+tree.column("#5", width=80, anchor=tk.W)
+tree.column("#6", width=100, anchor=tk.W)
+tree.column("#7", width=80, anchor=tk.W)
 
 tree.pack(fill="x", padx=20)
 

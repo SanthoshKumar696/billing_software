@@ -42,6 +42,67 @@ def save_items():
 def exit_program():
     root.quit()
 
+# Function to open the Main Ledger page
+def open_main_ledger():
+    # Create a new window for Main Ledger
+    ledger_window = tk.Toplevel(root)
+    ledger_window.title("Main Ledger")
+    ledger_window.geometry("800x600")
+    ledger_window.configure(bg="lightblue")
+    
+    # Add content for last month's calculations
+    tk.Label(
+        ledger_window, 
+        text="Main Ledger - Last Month's Calculations", 
+        font=("Arial", 16, "bold"), 
+        bg="lightblue", 
+        fg="darkblue"
+    ).pack(pady=10)
+
+    # Example data table
+    table_frame = tk.Frame(ledger_window, bg="lightblue")
+    table_frame.pack(fill="both", expand=True, padx=20, pady=10)
+
+    # Create a Treeview for displaying data
+    columns = ("#1", "#2", "#3", "#4", "#5")
+    ledger_tree = ttk.Treeview(table_frame, columns=columns, show="headings", height=10)
+
+    ledger_tree.heading("#1", text="Date")
+    ledger_tree.heading("#2", text="Party Name")
+    ledger_tree.heading("#3", text="Transaction Type")
+    ledger_tree.heading("#4", text="Amount")
+    ledger_tree.heading("#5", text="Remarks")
+
+    ledger_tree.column("#1", width=100, anchor=tk.CENTER)
+    ledger_tree.column("#2", width=200, anchor=tk.W)
+    ledger_tree.column("#3", width=150, anchor=tk.W)
+    ledger_tree.column("#4", width=100, anchor=tk.E)
+    ledger_tree.column("#5", width=250, anchor=tk.W)
+
+    # Insert sample data (Replace with actual logic to fetch data)
+    sample_data = [
+        ("01-11-2024", "Balaji", "Cash Receipt", "10000", "Gold Purchase"),
+        ("02-11-2024", "Santhosh", "Invoice", "15000", "Payment for Necklace"),
+        ("03-11-2024", "Dinesh", "Payment", "20000", "Advance Payment"),
+    ]
+    for row in sample_data:
+        ledger_tree.insert("", "end", values=row)
+
+    ledger_tree.pack(fill="both", expand=True)
+
+    # Add a button to close the ledger window
+    tk.Button(
+        ledger_window, 
+        text="Close", 
+        width=12, 
+        bg="red", 
+        fg="white", 
+        command=ledger_window.destroy
+    ).pack(pady=10)
+
+
+
+
 # Initialize the main window
 root = tk.Tk()
 root.title("Jewelry Shop Management")
@@ -67,9 +128,9 @@ menu_bar.add_cascade(label="Exit", menu=exit_menu)
 
 exit_menu.add_command(label="Exit", command=exit_program)
 
-#master clicking
+#Master
 # Adding submenu items to the Master menu
-master_menu.add_command(label="Main Ledger", command=lambda: messagebox.showinfo("Action", "Main Ledger clicked"))
+master_menu.add_command(label="Main Ledger", command=open_main_ledger)
 master_menu.add_command(label="Sub Ledger", command=lambda: messagebox.showinfo("Action", "Sub Ledger clicked"))
 master_menu.add_command(label="Main Product", command=lambda: messagebox.showinfo("Action", "Main Product clicked"))
 master_menu.add_command(label="Sub Product", command=lambda: messagebox.showinfo("Action", "Sub Product clicked"))
